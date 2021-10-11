@@ -8,9 +8,7 @@
       "name": "pro_book",
       "request": "launch",
       "type": "dart",
-      "args": [
-        "--dart-define=booksApiKey=AIzaSyDepYESXLRNj0YfJ8jO9aubt7Q4IS8hDGk"
-      ]
+      "args": ["--dart-define=booksApiKey=<put your api key here>"]
     },
     {
       "name": "pro_book (profile mode)",
