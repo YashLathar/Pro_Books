@@ -17,7 +17,7 @@ class BookService {
 
   Future<List<Book>> getBooks() async {
     final response = await _dio.get(
-        "https://www.googleapis.com/books/v1/volumes?q=subject=Physics&printType=books&maxResults=5&key=${_environmentConfig.booksApiKey}");
+        "https://www.googleapis.com/books/v1/volumes?q=The-Originals&printType=books&maxResults=5&key=${_environmentConfig.booksApiKey}");
 
     final results = List<Map<String, dynamic>>.from(response.data["items"]);
 

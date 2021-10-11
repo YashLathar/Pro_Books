@@ -52,8 +52,10 @@ class MyHomePage extends HookWidget {
                                 bookImageUrl: book.volumeInfo["imageLinks"]
                                     ["smallThumbnail"],
                                 bookName: book.volumeInfo["title"],
-                                bookAuthor: book.volumeInfo["authors"][0],
-                                category: book.volumeInfo["categories"][0],
+                                bookAuthor: book.volumeInfo["authors"][0] ??
+                                    "anonymous",
+                                category: book.volumeInfo["categories"][0] ??
+                                    "notGiven",
                               ))
                           .toList(),
                     ),
