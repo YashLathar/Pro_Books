@@ -66,13 +66,6 @@ class LoginPage extends HookWidget {
                                       },
                                     ),
                                   ),
-                                  const SizedBox(width: 15),
-                                  Expanded(
-                                    child: OAuthLoginButton(
-                                      icon: const Icon(FontAwesomeIcons.apple),
-                                      onPressed: () {},
-                                    ),
-                                  ),
                                 ],
                               ),
                             ],

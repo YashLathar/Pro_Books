@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 
 class Book {
   final String id;
@@ -71,21 +70,21 @@ class Book {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is Book &&
-      other.id == id &&
-      other.bookImageUrl == bookImageUrl &&
-      other.bookName == bookName &&
-      other.category == category &&
-      other.bookAuthor == bookAuthor;
+        other.id == id &&
+        other.bookImageUrl == bookImageUrl &&
+        other.bookName == bookName &&
+        other.category == category &&
+        other.bookAuthor == bookAuthor;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      bookImageUrl.hashCode ^
-      bookName.hashCode ^
-      category.hashCode ^
-      bookAuthor.hashCode;
+        bookImageUrl.hashCode ^
+        bookName.hashCode ^
+        category.hashCode ^
+        bookAuthor.hashCode;
   }
 }
