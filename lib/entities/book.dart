@@ -1,4 +1,6 @@
 import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 class Book {
@@ -32,6 +34,11 @@ class Book {
       id: map['id'],
       volumeInfo: Map<String, dynamic>.from(map['volumeInfo']),
     );
+  }
+
+  factory Book.fromDocument(DocumentSnapshot doc) {
+    final data = doc.data()! as Map<String, dynamic>;
+    return Book.fromMap(data);
   }
 
   String toJson() => json.encode(toMap());

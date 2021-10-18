@@ -9,15 +9,15 @@ class BookComponent extends StatelessWidget {
     required this.category,
   }) : super(key: key);
 
-  final String bookImageUrl;
-  final String bookName;
-  final String category;
-  final String bookAuthor;
+  final String? bookImageUrl;
+  final String? bookName;
+  final String? category;
+  final String? bookAuthor;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final splittedString = category.split(" ");
+    final splittedString = category!.split(" ");
     final formattedString = splittedString.sublist(0, 1);
     return Container(
       width: size.width,
@@ -50,13 +50,16 @@ class BookComponent extends StatelessWidget {
               height: 170,
               color: Colors.white,
               child: Image.network(
-                bookImageUrl,
+                bookImageUrl!,
                 fit: BoxFit.cover,
                 loadingBuilder: (BuildContext context, Widget child,
                     ImageChunkEvent? loadingProgress) {
                   if (loadingProgress == null) return child;
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.deepPurple),
+                    ),
                   );
                 },
               ),
@@ -70,14 +73,14 @@ class BookComponent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    "by " + bookAuthor,
+                    "by " + bookAuthor!,
                     style: const TextStyle(
                       fontSize: 15,
                       color: Colors.grey,
                     ),
                   ),
                   Text(
-                    bookName,
+                    bookName!,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
