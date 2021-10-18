@@ -37,11 +37,21 @@ class BookServiceController extends StateNotifier<AsyncValue<List<Book>>> {
   }
 
   Future<void> addToFav(
-      {required String id,
-      required Map<String, dynamic> volumeInfo,
+      {required id,
+    required bookImageUrl,
+    required bookName,
+    required category,
+    required bookAuthor,
       required BuildContext context}) async {
     try {
-      final book = Book(id: id, volumeInfo: volumeInfo);
+      final book = Book(
+        id: id,
+        bookAuthor: bookAuthor,
+        bookImageUrl: bookImageUrl,
+        bookName: bookName,
+        category: category,
+
+        );
       await _read(bookServiceProvider)
           .addToFav(userId: userId!, book: book, context: context);
 

@@ -1,4 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pro_book/controllers/book_service_controller.dart';
+import 'package:pro_book/services/book_service.dart';
 
 class BookComponent extends StatelessWidget {
   const BookComponent({
@@ -13,6 +18,7 @@ class BookComponent extends StatelessWidget {
   final String? bookName;
   final String? category;
   final String? bookAuthor;
+
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +107,14 @@ class BookComponent extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // ElevatedButton(
+                  //   onPressed: () async {
+                  //   await context.read(bookServiceControllerProvider).addToFav(
+                  //     id: id!, 
+                  //     volumeInfo: volumeinfo, 
+                  //     context: context);
+                  // }, child: const Text("hello"),
+                  // ),
                 ],
               ),
             ),

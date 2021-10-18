@@ -133,20 +133,10 @@ class MyHomePage extends HookWidget {
                       padding: const EdgeInsets.only(top: 10),
                       children: books
                           .map((book) => BookComponent(
-                                bookImageUrl: book.volumeInfo
-                                        .containsKey("imageLinks")
-                                    ? book.volumeInfo["imageLinks"]
-                                        ["smallThumbnail"]
-                                    : "https://books.google.co.in/googlebooks/images/no_cover_thumb.gif",
-                                bookName: book.volumeInfo["title"],
-                                bookAuthor:
-                                    book.volumeInfo.containsKey("authors")
-                                        ? book.volumeInfo["authors"][0]
-                                        : "anonymous",
-                                category:
-                                    book.volumeInfo.containsKey("categories")
-                                        ? book.volumeInfo["categories"][0]
-                                        : "notGiven",
+                                bookImageUrl: book.bookImageUrl,
+                                bookName: book.bookName,
+                                bookAuthor: book.bookAuthor,
+                                category: book.category,
                               ))
                           .toList(),
                     ),

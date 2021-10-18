@@ -42,7 +42,7 @@ class BookService implements BaseBookService {
       final updatedQuery = query.isEmpty ? "global" : query;
 
       final response = await _dio.get(
-          "https://www.googleapis.com/books/v1/volumes?q=$updatedQuery&printType=books&maxResults=5&key=${_environmentConfig.booksApiKey}");
+          "https://www.googleapis.com/books/v1/volumes?q=$updatedQuery&printType=books&maxResults=1&key=${_environmentConfig.booksApiKey}");
 
       final results = List<Map<String, dynamic>>.from(response.data["items"]);
 
@@ -63,9 +63,9 @@ class BookService implements BaseBookService {
       required BuildContext context}) async {
     try {
       final docRef =
-          _read(firestoreProvider).favBookRef(userId).add(book.toMap());
+        await _read(firestoreProvider).favBookRef(userId).add(book.toMap());
 
-      return docRef.then((doc) => doc.id);
+      return docRef.id;
     } on FirebaseException catch (e) {
       throw ErrorHandler.errorDialog(context, e);
     }
