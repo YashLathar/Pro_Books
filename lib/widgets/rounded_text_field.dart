@@ -34,7 +34,7 @@ class RoundedTextField extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: const BorderSide(
-              color: Color(0xffF14C37),
+              color: Colors.deepPurple,
               width: 2,
             ),
           ),

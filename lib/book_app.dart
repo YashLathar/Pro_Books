@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pro_book/custom_exception.dart';
 import 'package:pro_book/pages/home_page.dart';
 import 'package:pro_book/pages/login_page.dart';
 import 'package:pro_book/services/auth_service.dart';
@@ -37,16 +38,20 @@ class AuthChecker extends HookWidget {
   Widget build(BuildContext context) {
     final _authState = useProvider(authStreamProvider);
 
-    return _authState.when(data: (data) {
-      if (data != null) {
-        return const MyHomePage();
-      } else {
-        return const LoginPage();
-      }
-    }, loading: () {
-      return const CircularProgressIndicator();
-    }, error: (e, st) {
-      return const Text("ERROR");
-    });
+    return _authState.when(
+      data: (data) {
+        if (data != null) {
+          return const MyHomePage();
+        } else {
+          return const LoginPage();
+        }
+      },
+      loading: () {
+        return const Center(child: CircularProgressIndicator());
+      },
+      error: (error, _) => Text(error is CustomExeption
+          ? error.message!
+          : "Something Went wrong, try again"),
+    );
   }
 }

@@ -1,9 +1,11 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:pro_book/custom_exception.dart';
 import 'package:pro_book/ententions/firestore_extention.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:pro_book/auth_exception_handler.dart';
 import 'package:pro_book/book_exception.dart';
 import 'package:pro_book/entities/book.dart';
 import 'package:pro_book/environment_config.dart';
@@ -17,9 +19,8 @@ final bookServiceProvider = Provider<BookService>((ref) {
 
 abstract class BaseBookService {
   Future<List<Book>> getBooks(String query);
-  Future<List<Book>> getFavBooks(
-      {required String userId, required BuildContext context});
-  Future<String> addToFav(
+  Future<List<Book>> getFavBooks({required String userId});
+  Future<void> addToFav(
       {required String userId,
       required Book book,
       required BuildContext context});
@@ -39,10 +40,10 @@ class BookService implements BaseBookService {
   @override
   Future<List<Book>> getBooks(String query) async {
     try {
-      final updatedQuery = query.isEmpty ? "global" : query;
+      final updatedQuery = query.isEmpty ? "xmen" : query;
 
       final response = await _dio.get(
-          "https://www.googleapis.com/books/v1/volumes?q=$updatedQuery&printType=books&maxResults=1&key=${_environmentConfig.booksApiKey}");
+          "https://www.googleapis.com/books/v1/volumes?q=$updatedQuery&printType=books&maxResults=10&key=${_environmentConfig.booksApiKey}");
 
       final results = List<Map<String, dynamic>>.from(response.data["items"]);
 
@@ -57,29 +58,35 @@ class BookService implements BaseBookService {
   }
 
   @override
-  Future<String> addToFav(
+  Future<void> addToFav(
       {required String userId,
       required Book book,
       required BuildContext context}) async {
     try {
-      final docRef =
-        await _read(firestoreProvider).favBookRef(userId).add(book.toMap());
+      final bookContain =
+          await _read(firestoreProvider).favBookRef(userId).doc(book.id).get();
 
-      return docRef.id;
+      if (bookContain.data() == null) {
+        await _read(firestoreProvider)
+            .favBookRef(userId)
+            .doc(book.id)
+            .set(book.toMap());
+      }
     } on FirebaseException catch (e) {
-      throw ErrorHandler.errorDialog(context, e);
+      throw CustomExeption(message: e.message);
     }
   }
 
   @override
-  Future<List<Book>> getFavBooks(
-      {required String userId, required BuildContext context}) async {
+  Future<List<Book>> getFavBooks({required String userId}) async {
     try {
       final snap = await _read(firestoreProvider).favBookRef(userId).get();
 
-      return snap.docs.map((doc) => Book.fromDocument(doc)).toList();
+      return snap.docs.map((doc) {
+        return Book.fromDocument(doc);
+      }).toList();
     } on FirebaseException catch (e) {
-      throw ErrorHandler.errorDialog(context, e);
+      throw CustomExeption(message: e.message);
     }
   }
 
@@ -91,7 +98,7 @@ class BookService implements BaseBookService {
     try {
       await _read(firestoreProvider).favBookRef(userId).doc(bookId).delete();
     } on FirebaseException catch (e) {
-      throw ErrorHandler.errorDialog(context, e);
+      throw CustomExeption(message: e.message);
     }
   }
 }

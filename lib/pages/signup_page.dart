@@ -110,8 +110,8 @@ class SignupPage extends HookWidget {
                                       end: Alignment.topRight,
                                       colors: [
                                         // ignore: use_full_hex_values_for_flutter_colors
-                                        Color(0xff1EE1D72),
-                                        Color(0xffF14C37),
+                                        Color(0xff6a3093),
+                                        Color(0xffa044ff),
                                       ],
                                     ),
                                   ),
@@ -127,6 +127,7 @@ class SignupPage extends HookWidget {
                                       ),
                                       Text(
                                         'Sign up Securely',
+                                        style: TextStyle(color: Colors.white),
                                       ),
                                     ],
                                   ),
@@ -162,7 +163,7 @@ class SignupPage extends HookWidget {
                                   child: const Text(
                                     "Log In",
                                     style: TextStyle(
-                                        color: Colors.redAccent,
+                                        color: Colors.deepPurple,
                                         decoration: TextDecoration.underline),
                                   ),
                                 ),

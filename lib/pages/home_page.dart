@@ -34,6 +34,7 @@ class MyHomePage extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.deepPurple,
         title: const Text("Books"),
         leading: IconButton(
           onPressed: () async {
@@ -67,6 +68,10 @@ class MyHomePage extends HookWidget {
                                   child: const Text("Cancel"),
                                 ),
                                 ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.deepPurple),
+                                  ),
                                   onPressed: () async {
                                     await context
                                         .read(authServiceProvider)
@@ -90,7 +95,7 @@ class MyHomePage extends HookWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -135,6 +140,8 @@ class MyHomePage extends HookWidget {
                           .map((book) => BookComponent(
                                 bookImageUrl: book.bookImageUrl,
                                 bookName: book.bookName,
+                                bookDescription: book.bookDescription,
+                                id: book.id,
                                 bookAuthor: book.bookAuthor,
                                 category: book.category,
                               ))

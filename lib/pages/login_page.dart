@@ -15,7 +15,7 @@ class LoginPage extends HookWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final _emailController = useTextEditingController();
-    final _passwordController = TextEditingController();
+    final _passwordController = useTextEditingController();
     final isLoading = useState(false);
 
     return Scaffold(
@@ -168,8 +168,8 @@ class LoginPage extends HookWidget {
                                       end: Alignment.topRight,
                                       colors: [
                                         // ignore: use_full_hex_values_for_flutter_colors
-                                        Color(0xff1ee1d72),
-                                        Color(0xffF14C37),
+                                        Color(0xff6a3093),
+                                        Color(0xffa044ff),
                                       ],
                                     ),
                                   ),
@@ -233,7 +233,7 @@ class LoginPage extends HookWidget {
                                   child: const Text(
                                     "Sign up",
                                     style: TextStyle(
-                                        color: Colors.redAccent,
+                                        color: Colors.deepPurple,
                                         decoration: TextDecoration.underline),
                                   ),
                                 ),

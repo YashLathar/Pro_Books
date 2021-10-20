@@ -18,7 +18,7 @@ class OAuthLoginButton extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(
             width: 2,
-            color: Colors.grey,
+            color: Colors.deepPurple,
           ),
           borderRadius: BorderRadius.circular(15),
         ),
