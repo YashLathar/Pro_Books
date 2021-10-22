@@ -70,15 +70,14 @@ class AuthenticatioSevice implements BaseAuthenticationService {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
+      final googleAuth = await googleUser?.authentication;
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
 
-      await FirebaseAuth.instance.signInWithCredential(credential);
+      await _read(firebaseAuthProvider).signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
       throw ErrorHandler.errorDialog(context, e);
     }

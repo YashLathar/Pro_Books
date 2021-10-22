@@ -60,9 +60,11 @@ class LoginPage extends HookWidget {
                                     child: OAuthLoginButton(
                                       icon: const Icon(FontAwesomeIcons.google),
                                       onPressed: () async {
+                                        isLoading.value = true;
                                         await context
                                             .read(authServiceProvider)
                                             .signInWithGoogle(context);
+                                        isLoading.value = false;
                                       },
                                     ),
                                   ),
