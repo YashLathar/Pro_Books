@@ -63,7 +63,11 @@ class LoginPage extends HookWidget {
                                         isLoading.value = true;
                                         await context
                                             .read(authServiceProvider)
-                                            .signInWithGoogle(context);
+                                            .signInWithGoogle(context)
+                                            .catchError((e, st) {
+                                          isLoading.value = false;
+                                        });
+
                                         isLoading.value = false;
                                       },
                                     ),
