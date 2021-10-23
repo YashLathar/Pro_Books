@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 // ignore: implementation_imports
 import 'package:flutter_riverpod/src/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pro_book/custom_exception.dart';
 import 'package:pro_book/pages/signup_page.dart';
 import 'package:pro_book/services/auth_service.dart';
 import 'package:pro_book/widgets/oauth_login_button.dart';
@@ -61,11 +62,14 @@ class LoginPage extends HookWidget {
                                       icon: const Icon(FontAwesomeIcons.google),
                                       onPressed: () async {
                                         isLoading.value = true;
+
                                         await context
                                             .read(authServiceProvider)
                                             .signInWithGoogle(context)
                                             .catchError((e, st) {
-                                          isLoading.value = false;
+                                          if (e is CustomExeption) {
+                                            isLoading.value = false;
+                                          }
                                         });
 
                                         isLoading.value = false;

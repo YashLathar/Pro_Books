@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pro_book/auth_exception_handler.dart';
+import 'package:pro_book/custom_exception.dart';
 import 'package:pro_book/general_providers.dart';
 
 abstract class BaseAuthenticationService {
@@ -78,8 +80,8 @@ class AuthenticatioSevice implements BaseAuthenticationService {
       );
 
       await _read(firebaseAuthProvider).signInWithCredential(credential);
-    } on FirebaseAuthException catch (e) {
-      throw ErrorHandler.errorDialog(context, e);
+    } on PlatformException catch (e) {
+      throw CustomExeption(message: e.message);
     }
   }
 }
