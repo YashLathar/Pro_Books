@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pro_book/controllers/book_service_controller.dart';
 import 'package:pro_book/custom_exception.dart';
 import 'package:pro_book/widgets/book_component.dart';
 
-class FavouritesPage extends HookWidget {
+class FavouritesPage extends HookConsumerWidget {
   const FavouritesPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final data = useProvider(bookServiceControllerProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final data = ref.watch(bookServiceControllerProvider);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -43,7 +42,7 @@ class FavouritesPage extends HookWidget {
                     ))
                   : RefreshIndicator(
                       onRefresh: () {
-                        return context
+                        return ref
                             .refresh(bookServiceControllerProvider.notifier)
                             .getFavBooks();
                       },

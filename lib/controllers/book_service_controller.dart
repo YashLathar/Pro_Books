@@ -78,7 +78,7 @@ class BookServiceController extends StateNotifier<AsyncValue<List<Book>>> {
             ),
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          context.read(isAddedProvider).state = true;
+          _read(isAddedProvider.state).state = true;
         } else {
           final snackBar = SnackBar(
             backgroundColor: Colors.deepPurple,
@@ -90,7 +90,7 @@ class BookServiceController extends StateNotifier<AsyncValue<List<Book>>> {
             ),
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          context.read(isAddedProvider).state = false;
+          _read(isAddedProvider.state).state = false;
         }
       });
     } on CustomExeption catch (e) {

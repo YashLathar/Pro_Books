@@ -31,12 +31,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class AuthChecker extends HookWidget {
+class AuthChecker extends HookConsumerWidget {
   const AuthChecker({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final _authState = useProvider(authStreamProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _authState = ref.watch(authStreamProvider);
 
     return _authState.when(
       data: (data) {

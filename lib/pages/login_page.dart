@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-// ignore: implementation_imports
-import 'package:flutter_riverpod/src/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pro_book/custom_exception.dart';
 import 'package:pro_book/pages/signup_page.dart';
 import 'package:pro_book/services/auth_service.dart';
 import 'package:pro_book/widgets/oauth_login_button.dart';
 import 'package:pro_book/widgets/rounded_text_field.dart';
 
-class LoginPage extends HookWidget {
+class LoginPage extends HookConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     Size size = MediaQuery.of(context).size;
     final _emailController = useTextEditingController();
     final _passwordController = useTextEditingController();
@@ -63,7 +62,7 @@ class LoginPage extends HookWidget {
                                       onPressed: () async {
                                         isLoading.value = true;
 
-                                        await context
+                                        await ref
                                             .read(authServiceProvider)
                                             .signInWithGoogle(context)
                                             .catchError((e, st) {
@@ -205,7 +204,7 @@ class LoginPage extends HookWidget {
                                 onTap: () async {
                                   isLoading.value = true;
 
-                                  await context
+                                  await ref
                                       .read(authServiceProvider)
                                       .signInWithEmail(
                                           _emailController.text.trim(),

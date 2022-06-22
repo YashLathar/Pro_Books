@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -12,11 +13,11 @@ import 'package:pro_book/widgets/book_component.dart';
 import 'package:pro_book/widgets/error_component.dart';
 
 final bookFutureProvider = FutureProvider.autoDispose<List<Book>>((ref) async {
-  ref.maintainState = true;
+  ref.maintainState = false;
 
   final bookService = ref.watch(bookServiceProvider);
   final query = ref.watch(queryProvider);
-  final books = await bookService.getBooks(query.state);
+  final books = await bookService.getBooks(query);
   return books;
 });
 
@@ -24,12 +25,12 @@ final queryProvider = StateProvider<String>((ref) {
   return "";
 });
 
-class MyHomePage extends HookWidget {
+class MyHomePage extends HookConsumerWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final books = useProvider(bookFutureProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final books = ref.watch(bookFutureProvider);
     final _searchFieldController = useTextEditingController();
 
     return Scaffold(
@@ -73,7 +74,7 @@ class MyHomePage extends HookWidget {
                                         Colors.deepPurple),
                                   ),
                                   onPressed: () async {
-                                    await context
+                                    await ref
                                         .read(authServiceProvider)
                                         .signOut();
                                     Navigator.pop(context);
@@ -121,8 +122,8 @@ class MyHomePage extends HookWidget {
             child: CupertinoSearchTextField(
               controller: _searchFieldController,
               onSubmitted: (query) {
-                context.read(queryProvider).state = query;
-                context.refresh(bookServiceProvider);
+                ref.watch(queryProvider.state).state = query;
+                ref.refresh(bookServiceProvider);
               },
               padding: const EdgeInsets.all(15),
             ),
@@ -132,7 +133,7 @@ class MyHomePage extends HookWidget {
                 data: (books) {
                   return RefreshIndicator(
                     onRefresh: () {
-                      return context.refresh(bookFutureProvider);
+                      return ref.refresh(bookFutureProvider.future);
                     },
                     child: ListView(
                       padding: const EdgeInsets.only(top: 10),

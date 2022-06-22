@@ -60,6 +60,7 @@ class AuthenticatioSevice implements BaseAuthenticationService {
   @override
   Future<void> signOut() async {
     await _read(firebaseAuthProvider).signOut();
+    GoogleSignIn().disconnect();
   }
 
   @override

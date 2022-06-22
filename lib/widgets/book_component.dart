@@ -8,7 +8,7 @@ final isAddedProvider = StateProvider<bool>((ref) {
   return false;
 });
 
-class BookComponent extends StatelessWidget {
+class BookComponent extends ConsumerWidget {
   const BookComponent({
     Key? key,
     required this.bookImageUrl,
@@ -27,7 +27,7 @@ class BookComponent extends StatelessWidget {
   final String bookDescription;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     Size size = MediaQuery.of(context).size;
     final splittedString = category.split(" ");
     final formattedString = splittedString.sublist(0, 1);
@@ -81,7 +81,7 @@ class BookComponent extends StatelessWidget {
                                   backgroundColor: MaterialStateProperty.all(
                                       Colors.deepPurple)),
                               onPressed: () async {
-                                await context
+                                await ref
                                     .read(
                                         bookServiceControllerProvider.notifier)
                                     .removeFromFav(
@@ -186,7 +186,7 @@ class BookComponent extends StatelessWidget {
                         ),
                         LikeButton(
                           onTap: (bool isLiked) async {
-                            await context
+                            await ref
                                 .read(bookServiceControllerProvider.notifier)
                                 .addToFav(
                                     id: id,
@@ -197,7 +197,7 @@ class BookComponent extends StatelessWidget {
                                     category: category,
                                     context: context);
 
-                            isLiked = context.read(isAddedProvider).state;
+                            isLiked = ref.read(isAddedProvider);
                             return isLiked;
                           },
                           size: 25,

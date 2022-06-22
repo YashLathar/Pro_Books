@@ -80,7 +80,10 @@ class BookService implements BaseBookService {
   @override
   Future<List<Book>> getFavBooks({required String userId}) async {
     try {
-      final snap = await _read(firestoreProvider).favBookRef(userId).get();
+      final snap = await _read(firestoreProvider)
+          .favBookRef(userId)
+          .orderBy("id", descending: true)
+          .get();
 
       return snap.docs.map((doc) {
         return Book.fromDocument(doc);

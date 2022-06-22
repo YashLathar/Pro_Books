@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-// ignore: implementation_imports
-import 'package:flutter_riverpod/src/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pro_book/controllers/book_service_controller.dart';
 
-class BookDetailsPage extends HookWidget {
+class BookDetailsPage extends HookConsumerWidget {
   const BookDetailsPage(
       {required this.bookImageUrl,
       required this.bookName,
@@ -24,7 +23,7 @@ class BookDetailsPage extends HookWidget {
   final String bookDescription;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
@@ -117,7 +116,7 @@ class BookDetailsPage extends HookWidget {
                               height: 55,
                               color: Colors.deepPurple,
                               onPressed: () async {
-                                await context
+                                await ref
                                     .read(
                                         bookServiceControllerProvider.notifier)
                                     .addToFav(

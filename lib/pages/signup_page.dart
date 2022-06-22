@@ -4,11 +4,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pro_book/services/auth_service.dart';
 import 'package:pro_book/widgets/rounded_text_field.dart';
 
-class SignupPage extends HookWidget {
+class SignupPage extends HookConsumerWidget {
   const SignupPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     Size size = MediaQuery.of(context).size;
     final _emailController = useTextEditingController();
     final _passwordController = useTextEditingController();
@@ -134,7 +134,7 @@ class SignupPage extends HookWidget {
                                 ),
                                 onTap: () async {
                                   isLoading.value = true;
-                                  await context
+                                  await ref
                                       .read(authServiceProvider)
                                       .signUpWithEmail(
                                           _emailController.text.trim(),
